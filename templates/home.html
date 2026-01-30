@@ -1,0 +1,93 @@
+<!-- portfolio/profile_detail.html -->
+{% extends "base.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+{% block content%}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ profile.name }} - Portfolio</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- Header/Hero Section -->
+    <header class="hero">
+        <h1>{{ profile.name }}</h1>
+        <p class="bio">{{ profile.bio }}</p>
+        <div class="contact-links">
+            <a href="mailto:{{ profile.email }}">{{ profile.email }}</a>
+            <span>{{ profile.mobile }}</span>
+            <a href="{{ profile.linkedIn }}" target="_blank">LinkedIn</a>
+            <a href="{{ profile.github }}" target="_blank">GitHub</a>
+        </div>
+    </header>
+
+    <!-- Skills Section -->
+    <section class="skills">
+        <h2>Skills</h2>
+        <div class="skills-grid">
+            {% for skill in profile.skills_set.all %}
+            <div class="skill-item">
+                <h3>{{ skill.skills }}</h3>
+                <p class="proficiency">{{ skill.proficiency }}</p>
+                <span class="tags">{{ skill.tags }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Work Experience Section -->
+    <section class="experience">
+        <h2>Work Experience</h2>
+        {% for work in profile.workexperience_set.all %}
+        <div class="experience-item">
+            <h3>{{ work.title }}</h3>
+            <h4>{{ work.institution }}</h4>
+            <p class="dates">{{ work.start_date|date:"M Y" }} - {{ work.end_date|date:"M Y" }}</p>
+            <p class="remarks">{{ work.remarks }}</p>
+        </div>
+        {% endfor %}
+    </section>
+
+    <!-- Education Section -->
+    <section class="education">
+        <h2>Education</h2>
+        {% for edu in profile.education_set.all %}
+        <div class="education-item">
+            <h3>{{ edu.course }}</h3>
+            <h4>{{ edu.institution }}</h4>
+            <p class="dates">{{ edu.start_date|date:"M Y" }} - {{ edu.end_date|date:"M Y" }}</p>
+            <p class="remarks">{{ edu.remarks }}</p>
+        </div>
+        {% endfor %}
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects">
+        <h2>Projects</h2>
+        <div class="projects-grid">
+            {% for project in profile.projects_set.all %}
+            <div class="project-item">
+                <span class="project-type">{{ project.typeof }}</span>
+                <h3>{{ project.title }}</h3>
+                <p>{{ project.details }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Interests Section -->
+    <section class="interests">
+        <h2>Interests</h2>
+        <div class="interests-list">
+            {% for interest in profile.interests_set.all %}
+            <div class="interest-item">
+                <h4>{{ interest.name }}</h4>
+                <span class="tags">{{ interest.tags }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</body>
+{% endblock content %}
